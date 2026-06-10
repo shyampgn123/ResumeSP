@@ -5,17 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Resume Viewer</title>
 
-<!-- Google Analytics -->
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9JR411S4C0"></script>
 <script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-9JR411S4C0');
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-function pdfLoaded() {
-    document.getElementById("downloadBtn").style.display = "block";
-}
+  gtag('config', 'G-9JR411S4C0');
 </script>
 
 <style>
@@ -53,12 +50,12 @@ body{
     right:10px;
     z-index:9999;
     display:none;
-    padding:8px 12px;
+    padding:6px 10px;
     background:#2563eb;
     color:#ffffff;
     text-decoration:none;
     border-radius:6px;
-    font-size:13px;
+    font-size:11px;
     font-weight:600;
     box-shadow:0 2px 8px rgba(0,0,0,0.15);
 }
@@ -73,11 +70,10 @@ iframe{
     border:none;
 }
 
-/* Smaller button on mobile */
 @media (max-width:768px){
     #downloadBtn{
-        padding:6px 10px;
-        font-size:11px;
+        padding:5px 8px;
+        font-size:10px;
         top:8px;
         right:8px;
     }
@@ -98,7 +94,6 @@ iframe{
     id="downloadBtn"
     href="https://drive.google.com/uc?export=download&id=1wViOKwxO_wv1VegnZ68QrdJ88pOI0P0N"
     target="_blank"
-    onclick="gtag('event','resume_download');"
 >
     ⬇ Download
 </a>
@@ -107,7 +102,7 @@ iframe{
     src="https://drive.google.com/file/d/1wViOKwxO_wv1VegnZ68QrdJ88pOI0P0N/preview"
     onload="
         document.getElementById('loader').style.display='none';
-        pdfLoaded();
+        document.getElementById('downloadBtn').style.display='block';
     ">
 </iframe>
 
