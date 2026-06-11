@@ -10,14 +10,29 @@
 
 <script>
 window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
 
+function gtag(){ 
+    dataLayer.push(arguments); 
+}
+
+// GA INIT
 gtag('js', new Date());
 gtag('config', 'G-9JR411S4C0');
 
-const params = new URLSearchParams(window.location.search);
-const go = params.get('go');
 
+// -----------------------------
+// SAFE TRACKER
+// -----------------------------
+function trackEvent(eventName, params = {}) {
+    if (typeof gtag === "function") {
+        gtag('event', eventName, params);
+    }
+}
+
+
+// -----------------------------
+// LINKS MAP
+// -----------------------------
 const links = {
     linkedin: 'https://linkedin.com/in/shyam-payghan-b26a7b33b',
     instagram: 'https://instagram.com/eneyyy_27',
@@ -25,32 +40,74 @@ const links = {
     medium: 'https://medium.com/@sampgn',
     website: 'https://tinyurl.com/sampgn',
 
-    certificate1: 'https://drive.google.com/file/d/1qbFwOYADqXvL9Fo3syT3XCUezRciyzNW/view?usp=drivesdk',
-
-    certificate2: 'https://drive.google.com/file/d/10kr0W544Om6NanPCgyq-ajdF5CQfXYVg/view?usp=drivesdk',
+    certificate1: 'https://drive.google.com/file/d/1qbFwOYADqXvL9Fo3syT3XCUezRciyzNW/view',
+    certificate2: 'https://drive.google.com/file/d/10kr0W544Om6NanPCgyq-ajdF5CQfXYVg/view',
 
     project: 'https://shyampgn123.github.io/Intervue-project/'
 };
 
-if (go && links[go]) {
 
-    gtag('event', 'resume_link_click', {
-        link_name: go,
-        source: 'resume_pdf'
+// -----------------------------
+// EVENT MAPPING (ONE EVENT PER ACTION)
+// -----------------------------
+function getEventName(key) {
+    switch (key) {
+
+        // 🔵 Social handles (separate tracking)
+        case 'linkedin': return 'linkedin_click';
+        case 'instagram': return 'instagram_click';
+        case 'x': return 'x_click';
+        case 'medium': return 'medium_click';
+        case 'website': return 'website_click';
+
+        // 📄 Certificates
+        case 'certificate1': return 'certificate1_click';
+        case 'certificate2': return 'certificate2_click';
+
+        // 🚀 Project
+        case 'project': return 'project_click';
+
+        default:
+            return 'resume_link_click';
+    }
+}
+
+
+// -----------------------------
+// REDIRECT HANDLER
+// -----------------------------
+function handleRedirect(go) {
+
+    if (!go || !links[go]) return;
+
+    const eventName = getEventName(go);
+
+    // send analytics event
+    trackEvent(eventName, {
+        link: go,
+        source: 'resume_page'
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-        document.body.innerHTML = `
-            <div class="redirect-screen">
-                Redirecting...
-            </div>
-        `;
-    });
+    // show redirect screen
+    document.body.innerHTML = `
+        <div class="redirect-screen">
+            Redirecting...
+        </div>
+    `;
 
+    // delay for GA event flush
     setTimeout(() => {
         window.location.href = links[go];
-    }, 700);
+    }, 600);
 }
+
+
+// -----------------------------
+// READ URL PARAM (?go=linkedin)
+// -----------------------------
+const params = new URLSearchParams(window.location.search);
+handleRedirect(params.get('go'));
+
 </script>
 
 <style>
@@ -68,6 +125,7 @@ body{
     font-family:Arial, sans-serif;
 }
 
+/* Loader */
 #loader{
     position:fixed;
     top:0;
@@ -77,12 +135,13 @@ body{
     display:flex;
     justify-content:center;
     align-items:center;
-    background:#ffffff;
-    z-index:10000;
+    background:#fff;
     font-size:18px;
     font-weight:600;
+    z-index:10000;
 }
 
+/* Download button */
 #downloadBtn{
     position:fixed;
     top:10px;
@@ -91,16 +150,11 @@ body{
     display:none;
     padding:8px 12px;
     background:#2563eb;
-    color:#ffffff;
+    color:#fff;
     text-decoration:none;
     border-radius:8px;
     font-size:12px;
     font-weight:600;
-    box-shadow:0 2px 8px rgba(0,0,0,.15);
-}
-
-#downloadBtn:hover{
-    opacity:.9;
 }
 
 iframe{
@@ -109,6 +163,7 @@ iframe{
     border:none;
 }
 
+/* Redirect screen */
 .redirect-screen{
     height:100vh;
     display:flex;
@@ -119,7 +174,6 @@ iframe{
 }
 
 @media(max-width:768px){
-
     #downloadBtn{
         top:8px;
         right:8px;
@@ -131,22 +185,23 @@ iframe{
         font-size:16px;
     }
 }
+
 </style>
 </head>
 
 <body>
 
-<div id="loader">
-    Loading Resume...
-</div>
+<!-- Loader -->
+<div id="loader">Loading Resume...</div>
 
-<a
-id="downloadBtn"
+<!-- Download Button -->
+<a id="downloadBtn"
 href="https://drive.google.com/uc?export=download&id=1AxTFCYzmAV1xf64MqVIF_rdB4Tsj4MPk"
 target="_blank">
 ⬇ Download
 </a>
 
+<!-- Resume -->
 <iframe
 src="https://drive.google.com/file/d/1AxTFCYzmAV1xf64MqVIF_rdB4Tsj4MPk/preview"
 onload="
@@ -156,4 +211,4 @@ document.getElementById('downloadBtn').style.display='block';
 </iframe>
 
 </body>
-</html>
+    </html>
