@@ -7,255 +7,153 @@
 
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9JR411S4C0"></script>
+
 <script>
 window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
+
 gtag('js', new Date());
 gtag('config', 'G-9JR411S4C0');
+
+const params = new URLSearchParams(window.location.search);
+const go = params.get('go');
+
+const links = {
+    linkedin: 'https://linkedin.com/in/shyam-payghan-b26a7b33b',
+    instagram: 'https://instagram.com/eneyyy_27',
+    x: 'https://x.com/s_pygn',
+    medium: 'https://medium.com/@sampgn',
+    website: 'https://tinyurl.com/sampgn',
+
+    certificate1: 'https://drive.google.com/file/d/1qbFwOYADqXvL9Fo3syT3XCUezRciyzNW/view?usp=drivesdk',
+
+    certificate2: 'https://drive.google.com/file/d/10kr0W544Om6NanPCgyq-ajdF5CQfXYVg/view?usp=drivesdk',
+
+    project: 'https://shyampgn123.github.io/Intervue-project/'
+};
+
+if (go && links[go]) {
+
+    gtag('event', 'resume_link_click', {
+        link_name: go,
+        source: 'resume_pdf'
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.body.innerHTML = `
+            <div class="redirect-screen">
+                Redirecting...
+            </div>
+        `;
+    });
+
+    setTimeout(() => {
+        window.location.href = links[go];
+    }, 700);
+}
 </script>
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { height:100vh; overflow:hidden; background:#ffffff; font-family:Arial, sans-serif; }
 
-#loader {
-    position:fixed; top:0; left:0; width:100%; height:100%;
-    display:flex; justify-content:center; align-items:center;
-    background:#ffffff; z-index:10000; font-size:18px; font-weight:600;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-#downloadBtn {
-    position:fixed; top:10px; right:10px; z-index:9999; display:none;
-    padding:8px 12px; background:#2563eb; color:#ffffff; text-decoration:none;
-    border-radius:8px; font-size:12px; font-weight:600;
+body{
+    height:100vh;
+    overflow:hidden;
+    background:#ffffff;
+    font-family:Arial, sans-serif;
+}
+
+#loader{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:#ffffff;
+    z-index:10000;
+    font-size:18px;
+    font-weight:600;
+}
+
+#downloadBtn{
+    position:fixed;
+    top:10px;
+    right:10px;
+    z-index:9999;
+    display:none;
+    padding:8px 12px;
+    background:#2563eb;
+    color:#ffffff;
+    text-decoration:none;
+    border-radius:8px;
+    font-size:12px;
+    font-weight:600;
     box-shadow:0 2px 8px rgba(0,0,0,.15);
 }
 
-#downloadBtn:hover { opacity:.9; }
-iframe { width:100%; height:100vh; border:none; }
-
-.redirect-screen {
-    height:100vh; display:flex; justify-content:center; align-items:center;
-    font-size:20px; font-weight:600;
+#downloadBtn:hover{
+    opacity:.9;
 }
 
-/* Admin Styles */
-.admin-container { padding:20px; max-width:1400px; margin:0 auto; }
-.admin-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
-table { width:100%; border-collapse:collapse; margin-top:20px; }
-th, td { padding:12px; text-align:left; border-bottom:1px solid #ddd; }
-th { background-color:#f8f9fa; position:sticky; top:0; z-index:1; }
-.refresh-btn {
-    padding:10px 16px; background:#2563eb; color:white; border:none;
-    border-radius:6px; cursor:pointer; font-weight:600;
+iframe{
+    width:100%;
+    height:100vh;
+    border:none;
 }
-.filter-input { padding:10px; width:280px; margin-right:10px; font-size:15px; }
+
+.redirect-screen{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:20px;
+    font-weight:600;
+}
 
 @media(max-width:768px){
-    #downloadBtn{ top:8px; right:8px; font-size:11px; padding:6px 10px; }
-    #loader{ font-size:16px; }
+
+    #downloadBtn{
+        top:8px;
+        right:8px;
+        font-size:11px;
+        padding:6px 10px;
+    }
+
+    #loader{
+        font-size:16px;
+    }
 }
 </style>
 </head>
+
 <body>
 
-<!-- Main Resume View -->
-<div id="main-content">
-    <div id="loader">Loading Resume...</div>
-    <a id="downloadBtn" href="https://drive.google.com/uc?export=download&id=1AxTFCYzmAV1xf64MqVIF_rdB4Tsj4MPk" target="_blank">
-        ⬇ Download PDF
-    </a>
-    <iframe id="resume-iframe" src="https://drive.google.com/file/d/1AxTFCYzmAV1xf64MqVIF_rdB4Tsj4MPk/preview" onload="hideLoader()"></iframe>
+<div id="loader">
+    Loading Resume...
 </div>
 
-<!-- Admin Panel -->
-<div id="admin-panel" style="display:none;">
-    <div class="admin-container">
-        <div class="admin-header">
-            <h1>Resume Tracker Admin Dashboard</h1>
-            <div>
-                <button class="refresh-btn" onclick="loadVisits()">🔄 Refresh</button>
-                <button onclick="logoutAdmin()" style="margin-left:12px; padding:10px 16px;">Logout</button>
-            </div>
-        </div>
-        
-        <input type="text" id="searchInput" class="filter-input" placeholder="Search by country, city, or IP..." onkeyup="filterTable()">
-        <span><strong>Total Visits: <span id="totalVisits">0</span></strong></span>
+<a
+id="downloadBtn"
+href="https://drive.google.com/uc?export=download&id=1AxTFCYzmAV1xf64MqVIF_rdB4Tsj4MPk"
+target="_blank">
+⬇ Download
+</a>
 
-        <table id="visitsTable">
-            <thead>
-                <tr>
-                    <th>Timestamp</th>
-                    <th>Country</th>
-                    <th>City</th>
-                    <th>IP Address</th>
-                    <th>User Agent</th>
-                    <th>Clicked Links</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-    </div>
-</div>
+<iframe
+src="https://drive.google.com/file/d/1AxTFCYzmAV1xf64MqVIF_rdB4Tsj4MPk/preview"
+onload="
+document.getElementById('loader').style.display='none';
+document.getElementById('downloadBtn').style.display='block';
+">
+</iframe>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-analytics.js";
-  import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.14.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyAnBG781DUnuYpGDPHM7X3u-I5qk3z-Lp4",
-    authDomain: "resumetracker-3f8d8.firebaseapp.com",
-    projectId: "resumetracker-3f8d8",
-    storageBucket: "resumetracker-3f8d8.firebasestorage.app",
-    messagingSenderId: "947302546386",
-    appId: "1:947302546386:web:1ec1d26711d8773b30260b",
-    measurementId: "G-9EHRQLHM8H"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const db = getFirestore(app);
-
-  const ADMIN_SECRET = "shyamadmin2026";   // ← Change this to a strong password!
-
-  const params = new URLSearchParams(window.location.search);
-  const go = params.get('go');
-  const isAdmin = params.get('admin') === 'true';
-
-  const links = {
-      linkedin: 'https://linkedin.com/in/shyam-payghan-b26a7b33b',
-      instagram: 'https://instagram.com/eneyyy_27',
-      x: 'https://x.com/s_pygn',
-      medium: 'https://medium.com/@sampgn',
-      website: 'https://tinyurl.com/sampgn',
-      certificate1: 'https://drive.google.com/file/d/1qbFwOYADqXvL9Fo3syT3XCUezRciyzNW/view?usp=drivesdk',
-      certificate2: 'https://drive.google.com/file/d/10kr0W544Om6NanPCgyq-ajdF5CQfXYVg/view?usp=drivesdk',
-      project: 'https://shyampgn123.github.io/Intervue-project/'
-  };
-
-  if (go && links[go]) {
-      gtag('event', 'resume_link_click', { link_name: go, source: 'resume' });
-      document.body.innerHTML = `<div class="redirect-screen">Redirecting...</div>`;
-      setTimeout(() => window.location.href = links[go], 700);
-      return;
-  }
-
-  if (isAdmin) {
-      showAdminPanel();
-  } else {
-      trackVisit();
-  }
-
-  async function getLocationData() {
-      try {
-          const res = await fetch('https://ip-api.com/json/?fields=status,message,country,city,query');
-          const data = await res.json();
-          if (data.status === 'success') {
-              return { country: data.country, city: data.city, ip: data.query };
-          }
-      } catch(e) {}
-      return { country: 'Unknown', city: 'Unknown', ip: 'N/A' };
-  }
-
-  async function trackVisit() {
-      const loc = await getLocationData();
-      const visitData = {
-          timestamp: serverTimestamp(),
-          country: loc.country,
-          city: loc.city,
-          ip: loc.ip,
-          userAgent: navigator.userAgent.substring(0, 200),
-          clickedLinks: []
-      };
-      try {
-          await addDoc(collection(db, "visits"), visitData);
-      } catch (e) { console.error(e); }
-  }
-
-  function hideLoader() {
-      document.getElementById('loader').style.display = 'none';
-      document.getElementById('downloadBtn').style.display = 'block';
-  }
-
-  async function showAdminPanel() {
-      document.getElementById('main-content').style.display = 'none';
-      document.getElementById('admin-panel').style.display = 'block';
-
-      const pass = prompt("Enter Admin Password:");
-      if (pass !== ADMIN_SECRET) {
-          alert("Incorrect Password!");
-          window.location.href = window.location.pathname;
-          return;
-      }
-      loadVisits();
-  }
-
-  let allVisits = [];
-
-  async function loadVisits() {
-      const tbody = document.querySelector('#visitsTable tbody');
-      tbody.innerHTML = '<tr><td colspan="6">Loading data...</td></tr>';
-
-      try {
-          const q = query(collection(db, "visits"), orderBy("timestamp", "desc"));
-          const snapshot = await getDocs(q);
-          
-          allVisits = [];
-          snapshot.forEach(doc => {
-              const d = doc.data();
-              allVisits.push({
-                  ...d,
-                  timestampStr: d.timestamp ? new Date(d.timestamp.toDate()).toLocaleString() : 'N/A'
-              });
-          });
-
-          renderTable(allVisits);
-      } catch (error) {
-          console.error(error);
-          tbody.innerHTML = '<tr><td colspan="6">Error loading data. Make sure rules are published.</td></tr>';
-      }
-  }
-
-  function renderTable(visits) {
-      const tbody = document.querySelector('#visitsTable tbody');
-      tbody.innerHTML = '';
-      document.getElementById('totalVisits').textContent = visits.length;
-
-      visits.forEach(v => {
-          const row = document.createElement('tr');
-          row.innerHTML = `
-              <td>${v.timestampStr}</td>
-              <td>${v.country || 'Unknown'}</td>
-              <td>${v.city || 'Unknown'}</td>
-              <td>${v.ip || 'N/A'}</td>
-              <td><small>${v.userAgent || ''}</small></td>
-              <td>${v.clickedLinks && v.clickedLinks.length ? v.clickedLinks.join(', ') : '—'}</td>
-          `;
-          tbody.appendChild(row);
-      });
-  }
-
-  function filterTable() {
-      const term = document.getElementById('searchInput').value.toLowerCase();
-      const filtered = allVisits.filter(v => 
-          (v.country && v.country.toLowerCase().includes(term)) ||
-          (v.city && v.city.toLowerCase().includes(term)) ||
-          (v.ip && v.ip.includes(term))
-      );
-      renderTable(filtered);
-  }
-
-  function logoutAdmin() {
-      if (confirm("Logout from admin panel?")) {
-          window.location.href = window.location.pathname;
-      }
-  }
-
-  window.loadVisits = loadVisits;
-  window.filterTable = filterTable;
-  window.logoutAdmin = logoutAdmin;
-  window.hideLoader = hideLoader;
-</script>
 </body>
 </html>
