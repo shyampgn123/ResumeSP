@@ -3,19 +3,58 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Resume Viewer</title>
+<title>Shyam Payghan Resume</title>
 
-<!-- Google tag (gtag.js) -->
+<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-9JR411S4C0"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-9JR411S4C0');
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+
+gtag('js', new Date());
+gtag('config', 'G-9JR411S4C0');
+
+const params = new URLSearchParams(window.location.search);
+const go = params.get('go');
+
+const links = {
+    linkedin: 'https://linkedin.com/in/shyam-payghan-b26a7b33b',
+    instagram: 'https://instagram.com/eneyyy_27',
+    x: 'https://x.com/s_pygn',
+    medium: 'https://medium.com/@sampgn',
+    website: 'https://tinyurls.com/sampgn',
+
+    certificate1: 'https://drive.google.com/file/d/1qbFwOYADqXvL9Fo3syT3XCUezRciyzNW/view?usp=drivesdk',
+
+    certificate2: 'https://drive.google.com/file/d/10kr0W544Om6NanPCgyq-ajdF5CQfXYVg/view?usp=drivesdk',
+
+    project: 'https://shyampgn123.github.io/Intervue-project/'
+};
+
+if (go && links[go]) {
+
+    gtag('event', 'resume_link_click', {
+        link_name: go,
+        source: 'resume_pdf'
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.body.innerHTML = `
+            <div class="redirect-screen">
+                Redirecting...
+            </div>
+        `;
+    });
+
+    setTimeout(() => {
+        window.location.href = links[go];
+    }, 700);
+}
 </script>
 
 <style>
+
 *{
     margin:0;
     padding:0;
@@ -50,18 +89,18 @@ body{
     right:10px;
     z-index:9999;
     display:none;
-    padding:6px 10px;
+    padding:8px 12px;
     background:#2563eb;
     color:#ffffff;
     text-decoration:none;
-    border-radius:6px;
-    font-size:11px;
+    border-radius:8px;
+    font-size:12px;
     font-weight:600;
-    box-shadow:0 2px 8px rgba(0,0,0,0.15);
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
 }
 
 #downloadBtn:hover{
-    opacity:0.9;
+    opacity:.9;
 }
 
 iframe{
@@ -70,12 +109,22 @@ iframe{
     border:none;
 }
 
-@media (max-width:768px){
+.redirect-screen{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:20px;
+    font-weight:600;
+}
+
+@media(max-width:768px){
+
     #downloadBtn{
-        padding:5px 8px;
-        font-size:10px;
         top:8px;
         right:8px;
+        font-size:11px;
+        padding:6px 10px;
     }
 
     #loader{
@@ -84,6 +133,7 @@ iframe{
 }
 </style>
 </head>
+
 <body>
 
 <div id="loader">
@@ -91,19 +141,18 @@ iframe{
 </div>
 
 <a
-    id="downloadBtn"
-    href="https://drive.google.com/uc?export=download&id=1wViOKwxO_wv1VegnZ68QrdJ88pOI0P0N"
-    target="_blank"
->
-    ⬇ Download
+id="downloadBtn"
+href="https://drive.google.com/uc?export=download&id=1AxTFCYzmAV1xf64MqVIF_rdB4Tsj4MPk"
+target="_blank">
+⬇ Download
 </a>
 
 <iframe
-    src="https://drive.google.com/file/d/1wViOKwxO_wv1VegnZ68QrdJ88pOI0P0N/preview"
-    onload="
-        document.getElementById('loader').style.display='none';
-        document.getElementById('downloadBtn').style.display='block';
-    ">
+src="https://drive.google.com/file/d/1AxTFCYzmAV1xf64MqVIF_rdB4Tsj4MPk/preview"
+onload="
+document.getElementById('loader').style.display='none';
+document.getElementById('downloadBtn').style.display='block';
+">
 </iframe>
 
 </body>
